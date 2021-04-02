@@ -10,4 +10,5 @@ def main():
     app.register_blueprint(jobs_api.blueprint)
     app.run()
 
+
 main()

@@ -23,14 +23,21 @@ def get_jobs():
 def get_one_job(job_id):
     session = db_session.create_session()
 
-    # Получите список работ с идентификатором job_id
-
-    return jsonify(...)  # Верните список работ с идентификтором job_id
+    jobs = session.query(Jobs).get(job_id)
+    if not jobs:
+        return jsonify({'error': 'Not found'})
+    return jsonify(
+        {
+            'jobs': jobs.to_dict(only=('id', 'team_leader', 'job', 'work_size',
+                                       'collaborators', 'start_date',
+                                       'end_date',
+                                       'is_finished'))
+        }
+    )
 
 
 @blueprint.route('/api/jobs', methods=['POST'])
 def create_job():
-
     # Проверьте, что запрос содержит данные в формате json,
     # а также, что данный json содержит все требуемые поля данных
     # При необходимости верните сообщение об ошибке в нужном формате
@@ -42,9 +49,11 @@ def create_job():
 
     job = Jobs(
         id=request.json['id'],
-        #...  # Проинициализируйте оставшиеся поля
+        # ...  # Проинициализируйте оставшиеся поля
     )
 
     # Сохраните объект job в базе данных
 
     return jsonify(...)  # Верните сообщение об успехе
+
+
