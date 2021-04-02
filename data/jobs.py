@@ -7,7 +7,7 @@ from sqlalchemy_serializer import SerializerMixin
 from .db_session import SqlAlchemyBase
 
 
-class Jobs(SqlAlchemyBase, SerializerMixin):
+class Jobs(SqlAlchemyBase, SerializerMixin, UserMixin):
     __tablename__ = 'jobs'
 
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
